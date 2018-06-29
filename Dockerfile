@@ -25,7 +25,7 @@ RUN ./venv/bin/pip install -r requirements.txt
 
 # cron setting
 USER root
-RUN echo "* * * * * crypto echo [`date '+%Y-%m-%d %H:%M:%S'`] > /home/crypto/sentinel.log 2>&1" >> /etc/crontab
+RUN echo "* * * * * crypto echo [`date '+%Y-%m-%d %H:%M:%S'`] >> /home/crypto/sentinel.log 2>&1" >> /etc/crontab
 RUN echo "* * * * * crypto cd /home/crypto/sentinel && ./venv/bin/python bin/sentinel.py >> /home/crypto/sentinel.log 2>&1" >> /etc/crontab
 
 # reset apt-get cache
