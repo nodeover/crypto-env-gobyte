@@ -22,10 +22,11 @@ WORKDIR /home/crypto/sentinel
 RUN echo "gobyte_conf=/home/crypto/.gobytecore/gobyte.conf" >> sentinel.conf
 RUN virtualenv venv
 RUN ./venv/bin/pip install -r requirements.txt
+
+# cron setting
 USER root
-RUN touch /etc/cron.d/sentinel-cron
-RUN chmod 0644 /etc/cron.d/sentinel-cron
-RUN echo "* * * * * cd /home/crypto/sentinel && ./venv/bin/python bin/sentinel.py > /home/crypto/sentinel.log 2>&1" >> /etc/cron.d/sentinel-cron
+RUN echo "* * * * * crypto echo [`date '+%Y-%m-%d %H:%M:%S'`] > /home/crypto/sentinel.log 2>&1" >> /etc/crontab
+RUN echo "* * * * * crypto cd /home/crypto/sentinel && ./venv/bin/python bin/sentinel.py >> /home/crypto/sentinel.log 2>&1" >> /etc/crontab
 
 # reset apt-get cache
 USER root
